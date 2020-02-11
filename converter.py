@@ -19,5 +19,5 @@ enc64 = base64.b64encode(bytes(text))
 
 print (enc64)
 
-curlReq = "curl -X PUT \"localhost:9200/some_index/_doc/42?pipeline=attachment\" -H 'Content-Type: application/json' -d' {\"data\": \"" + enc64+ "\"}'"
+curlReq = "curl -X PUT \"localhost:9200/documents/_pdf/42?pipeline=attachment\" -H 'Content-Type: application/json' -d' {\"data\": \"" + enc64+ "\"}'"
 os.system(curlReq)
