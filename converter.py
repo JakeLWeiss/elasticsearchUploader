@@ -7,6 +7,19 @@ import requests
 import os
 import json
 
+def init():
+
+	confirm = str(raw_input("Any existing cfg.json file will be cleared. Continue? ['yes' to contine]  "))
+	if not confirm == "yes":
+		exit()
+
+	print("Making cfg.json file.")
+	cfg = { 'host' : 'localhost' , 'port' : 9200 , 'id' : 0 }
+	with open("cfg.json", "w+") as f:
+		f.write(json.dumps(cfg))
+
+	configSettings()
+
 def getID():
 	cfg = None
 	try: #open file to read as a check
@@ -43,7 +56,7 @@ def loadSettings():
 			cfg = json.load(f)
 	except IOError: #if it fails generate the file
 		print("Missing cfg.json file, new config file has been created.")
-		cfg = { 'host' : '' , 'port' : 9200 , 'id' : 0 }
+		cfg = { 'host' : 'localhost' , 'port' : 9200 , 'id' : 0 }
 		with open("cfg.json", "w+") as f:
 			f.write(json.dumps(cfg))
 
@@ -90,6 +103,14 @@ if(sys.argv[1] == "--config"):
 elif(sys.argv[1].endswith(".pdf")):
 	text = processPDF()
 	doctype = 'pdf'
+
+elif(sys.argv[1] == "--init"):
+	init()
+	exit()
+
+else:
+	print("No valid file or command specified.")
+	exit()
 
 id = getID()
 
